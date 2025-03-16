@@ -68,7 +68,7 @@ Updated Code -->
 <img src="contrast-logo.jpg">
     <h2>Contrast AST ROI Calculator</h2>
     
-    <label for="vulnerabilities">Number of vulnerabilities (annual):</label>
+    <label for="vulnerabilities">Number of vulnerabilities per app (annual):</label>
     <input type="number" id="vulnerabilities" placeholder="Enter number">
 
     <label for="applications">Number of applications:</label>
@@ -88,14 +88,18 @@ Updated Code -->
 
     <button onclick="calculateROI()">Calculate ROI</button>
 
-<!--    <div class="result" id="totalCost">Total Cost: $0</div>  -->
+<!--    <div class="result" id="totalCost">Total Cost: $0</div>  
     <div class="result" id="costCurrentFP">Annual cost with current FP rate (0%): $0</div>
-    <div class="result" id="costNewFP">Annual cost with Contrast Security FP rate (0%): $0</div>
-    <div class="result" id="annualSavings">Net annual savings: $0</div>
-    <div class="result" id="monthlySavings">Net monthly savings: $0</div>
+    <div class="result" id="costNewFP">Annual cost with Contrast Security FP rate (0%): $0</div> -->
+    <div class="result" id="annualSavingsapp">Annual savings per app: $0</div>
+    <div class="result" id="annualSavings">Net total annual savings: $0</div>
+    <div class="result" id="monthlySavings">Net total monthly savings: $0</div>
     <div class="result">&nbsp;</div>
-    <div class="result"><span style="font-size:9px;">Assumptions:&nbsp;&nbsp;</span><span style="font-size: 9px;">links to #vulns, dev $ rate, FPs</span></div>
-
+   
+<div class="result"><span style="font-size:8px;"><span style="font-family:arial,helvetica,sans-serif;">Assumptions:<br />
+<u style="text-indent: 0in;"><span style="font-variant-numeric: normal; font-variant-east-asian: normal; font-variant-alternates: normal; font-variant-position: normal; font-variant-emoji: normal; color: rgb(8, 60, 90);"><a href="https://assets.ctfassets.net/6pk8mg3yh2ee/2ROnWrnlNeMekgOgvb4Jm0/004ef415e2bbd4c1f5939cdd676518e7/ESG-Research-Insights-Paper-Fastly-Web-App-and-API-Protection-July-2021_English_FINAL.pdf">40% False positive rate</a></span></u><br />
+<u style="text-indent: 0in;"><span style="font-variant-numeric: normal; font-variant-east-asian: normal; font-variant-alternates: normal; font-variant-position: normal; font-variant-emoji: normal; color: rgb(8, 60, 90);"><a href="https://www.contrastsecurity.com/hubfs/DocumentsPDF/The-State-of-DevSecOps_Report_Final.pdf">20min </a></span></u><u style="text-indent: 0in;"><span style="font-variant-numeric: normal; font-variant-east-asian: normal; font-variant-alternates: normal; font-variant-position: normal; font-variant-emoji: normal; color: rgb(8, 60, 90);"><a href="https://www.contrastsecurity.com/hubfs/DocumentsPDF/The-State-of-DevSecOps_Report_Final.pdf">triage</a></span></u><u style="text-indent: 0in;"><span style="font-variant-numeric: normal; font-variant-east-asian: normal; font-variant-alternates: normal; font-variant-position: normal; font-variant-emoji: normal; color: rgb(8, 60, 90);"><a href="https://www.contrastsecurity.com/hubfs/DocumentsPDF/The-State-of-DevSecOps_Report_Final.pdf"> time per vuln<br />
+​</a></span></u><u style="text-indent: 0in;"><span style="font-variant-numeric: normal; font-variant-east-asian: normal; font-variant-alternates: normal; font-variant-position: normal; font-variant-emoji: normal; color: rgb(8, 60, 90);"><a href="https://www.ziprecruiter.com/Salaries/Devops-Software-Engineer-Salary">Developer avg per hour rate</a></span></u></span></span></div>
 </div>
 
 <script>
@@ -114,12 +118,12 @@ Updated Code -->
         let totalCost = vulnerabilities * applications * rate * triageHours;
 
         // Calculate cost with current and new false positive rates
-        let costCurrentFP = totalCost * (currentFalsePositive / 100);
-        let costNewFP = totalCost * (newFalsePositive / 100);
+        let costCurrentFP = totalCost * (1+currentFalsePositive / 100);
+        let costNewFP = totalCost * (1+newFalsePositive / 100);
 
         // Calculate net annual savings
         let annualSavings = (costCurrentFP - costNewFP); // Annual savings
-
+        let annualSavingsapp = annualSavings / applications
 	// Calculate monthly savings
         let monthlySavings = annualSavings / 12; // Assuming monthly savings are annual impact divided by 12
 
@@ -129,11 +133,12 @@ Updated Code -->
         }
 
         // Display results with FP rates included
-<!--        document.getElementById("totalCost").innerHTML = `Total Cost: $${formatNumber(totalCost)}`;  -->
-        document.getElementById("costCurrentFP").innerHTML = `Annual cost with Current FP Rate (${currentFalsePositive}%): $${formatNumber(costCurrentFP)}`;
-        document.getElementById("costNewFP").innerHTML = `Annual cost with Contrast Security FP Rate (${newFalsePositive}%): $${formatNumber(costNewFP)}`;
-        document.getElementById("annualSavings").innerHTML = `Net annual cost savings: $${formatNumber(annualSavings)}`;
-        document.getElementById("monthlySavings").innerHTML = `Monthly savings: $${formatNumber(monthlySavings)}`;
+        // document.getElementById("totalCost").innerHTML = `Total Cost: $${formatNumber(totalCost)}`; 
+        // document.getElementById("costCurrentFP").innerHTML = `Annual cost with Current FP Rate (${currentFalsePositive}%): $${formatNumber(costCurrentFP)}`;
+        // document.getElementById("costNewFP").innerHTML = `Annual cost with Contrast Security FP Rate (${newFalsePositive}%): $${formatNumber(costNewFP)}`;
+       document.getElementById("annualSavingsapp").innerHTML = `Annual savings per app: $${formatNumber(annualSavingsapp)}`;
+       document.getElementById("annualSavings").innerHTML = `Net annual cost savings: $${formatNumber(annualSavings)}`;
+       document.getElementById("monthlySavings").innerHTML = `Monthly savings: $${formatNumber(monthlySavings)}`;
     }
 
 </script>
