@@ -92,8 +92,8 @@ Updated Code -->
     <div class="result" id="costCurrentFP">Annual cost with current FP rate (0%): $0</div>
     <div class="result" id="costNewFP">Annual cost with Contrast Security FP rate (0%): $0</div> -->
     <div class="result" id="annualSavingsapp">Annual savings per app: $0</div>
-    <div class="result" id="annualSavings">Net total annual savings: $0</div>
-    <div class="result" id="monthlySavings">Net total monthly savings: $0</div>
+    <div class="result" id="annualSavings">Total annual savings: $0</div>
+    <div class="result" id="monthlySavings">Total monthly savings: $0</div>
     <div class="result">&nbsp;</div>
    
 <div class="result"><span style="font-size:8px;"><span style="font-family:arial,helvetica,sans-serif;">Assumptions:<br />
@@ -137,8 +137,8 @@ Updated Code -->
         // document.getElementById("costCurrentFP").innerHTML = `Annual cost with Current FP Rate (${currentFalsePositive}%): $${formatNumber(costCurrentFP)}`;
         // document.getElementById("costNewFP").innerHTML = `Annual cost with Contrast Security FP Rate (${newFalsePositive}%): $${formatNumber(costNewFP)}`;
        document.getElementById("annualSavingsapp").innerHTML = `Annual savings per app: $${formatNumber(annualSavingsapp)}`;
-       document.getElementById("annualSavings").innerHTML = `Net annual cost savings: $${formatNumber(annualSavings)}`;
-       document.getElementById("monthlySavings").innerHTML = `Monthly savings: $${formatNumber(monthlySavings)}`;
+       document.getElementById("annualSavings").innerHTML = `Total annual savings: $${formatNumber(annualSavings)}`;
+       document.getElementById("monthlySavings").innerHTML = `Total monthly savings: $${formatNumber(monthlySavings)}`;
     }
 
 </script>
