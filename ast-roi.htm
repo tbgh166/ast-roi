@@ -127,10 +127,10 @@ Updated Code -->
 
         // Display results with FP rates included
 <!--        document.getElementById("totalCost").innerHTML = `Total Cost: $${formatNumber(totalCost)}`;  -->
-        document.getElementById("costCurrentFP").innerHTML = `Cost with Current FP Rate (${currentFalsePositive}%): $${formatNumber(costCurrentFP)}`;
-        document.getElementById("costNewFP").innerHTML = `Cost with Contrast Security FP Rate (${newFalsePositive}%): $${formatNumber(costNewFP)}`;
-        document.getElementById("annualSavings").innerHTML = `Net Annual Savings: $${formatNumber(annualSavings)}`;
-        document.getElementById("monthlySavings").innerHTML = `Monthly Savings: $${formatNumber(monthlySavings)}`;
+        document.getElementById("costCurrentFP").innerHTML = `Annual cost with Current FP Rate (${currentFalsePositive}%): $${formatNumber(costCurrentFP)}`;
+        document.getElementById("costNewFP").innerHTML = `Annual cost with Contrast Security FP Rate (${newFalsePositive}%): $${formatNumber(costNewFP)}`;
+        document.getElementById("annualSavings").innerHTML = `Net annual cost savings: $${formatNumber(annualSavings)}`;
+        document.getElementById("monthlySavings").innerHTML = `Monthly savings: $${formatNumber(monthlySavings)}`;
     }
 
     function exportToPDF() {
