@@ -93,6 +93,9 @@ Updated Code -->
     <div class="result" id="costNewFP">Annual cost with Contrast Security FP rate (0%): $0</div>
     <div class="result" id="annualSavings">Net annual savings: $0</div>
     <div class="result" id="monthlySavings">Net monthly savings: $0</div>
+    <div class="result">&nbsp;</div>
+    <div class="result"><span style="font-size:9px;">Assumptions:&nbsp;&nbsp;</span><span style="font-size: 9px;">links to #vulns, dev $ rate, FPs</span></div>
+
 </div>
 
 <script>
@@ -133,30 +136,6 @@ Updated Code -->
         document.getElementById("monthlySavings").innerHTML = `Monthly savings: $${formatNumber(monthlySavings)}`;
     }
 
-    function exportToPDF() {
-        const { jsPDF } = window.jspdf;
-        const doc = new jsPDF();
-
-        doc.setFont("helvetica", "bold");
-        doc.setFontSize(16);
-        doc.text("ROI Calculator Results", 20, 20);
-
-        doc.setFontSize(12);
-        doc.setFont("helvetica", "normal");
-
-        let totalCost = document.getElementById("totalCost").innerText;
-        let costCurrentFP = document.getElementById("costCurrentFP").innerText;
-        let costNewFP = document.getElementById("costNewFP").innerText;
-        let annualSavings = document.getElementById("annualSavings").innerText;
-
-        let y = 40;
-        doc.text(totalCost, 20, y);
-        doc.text(costCurrentFP, 20, y + 10);
-        doc.text(costNewFP, 20, y + 20);
-        doc.text(annualSavings, 20, y + 30);
-
-        doc.save("ROI_Calculator_Results.pdf");
-    }
 </script>
 
 </body>
@@ -173,10 +152,5 @@ o	Cost at Current False Positive Rate: Cost=Total Cost×(Current FP Rate100)\tex
 o	Cost at New False Positive Rate: Cost=Total Cost×(New FP Rate100)\text{Cost} = \text{Total Cost} \times \left(\frac{\text{New FP Rate}}{100}\right) 
 o	Net Annual Savings: Annual Savings=(Cost at Current FP Rate−Cost at New FP Rate)×12\text{Annual Savings} = (\text{Cost at Current FP Rate} - \text{Cost at New FP Rate}) \times 12 
 3.	Results are displayed dynamically. 
-
-"Export to PDF" button added below the calculator.
-✅ Uses jsPDF to generate and download a formatted PDF file.
-✅ Results are structured neatly for easy readability.
-
 
 -->
