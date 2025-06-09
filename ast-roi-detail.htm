@@ -1,9 +1,9 @@
-<!DOCTYPE html>
+TAILED<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Contrast AST ROI Calculator</title>
+  <title>Contrast AST ROI Calculator DETAILED</title>
   <style>
     body {
       font-family: Arial, sans-serif;
@@ -53,7 +53,7 @@
   </style>
 </head>
 <body>
-  <h1>Contrast AST ROI Calculator</h1>
+  <h1>Contrast AST ROI Calculator DETAILED</h1>
 
   <div class="section">
     <h2>Customer Facts</h2>
@@ -68,13 +68,15 @@
   <div class="section">
     <h2>Before Contrast</h2>
     <label>Time to Triage (minutes): <input id="triageTime" type="number" value="20"></label>
-    <label>Re-Triage Rate (%): <input id="retriageRate" type="number" value="20" step="0.01"></label>
-    <label>Time to Fix (minutes): <input id="fixTime" type="number" value="60"></label>
     <p class="result">Triage Cost per Vulnerability: $<span id="triageCost">0</span></p>
     <p class="result">Triage Cost per Scan: $<span id="triageScan">0</span></p>
-    <p class="result">Annual Triage Cost: $<span id="triageAnnual">0</span></p>
+    <label>Findings needing triaged again when scanning multiple times (e.g. one scan per release)? (%): <input id="retriageRate" type="number" value="20" step="0.01"></label>
+    <label>Time to Fix vulnerability (minutes): <input id="fixTime" type="number" value="60"></label>
     <p class="result">Annual Fix Cost: $<span id="fixAnnual">0</span></p>
     <p class="result">Total Cost per App/Year: $<span id="totalBefore">0</span></p>
+    <p class="result">Annual Triage Cost: $<span id="triageAnnual">0</span></p>
+     
+   
   </div>
 
   <div class="section">
