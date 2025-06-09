@@ -59,6 +59,7 @@
     <h2>Customer Facts</h2>
     <label>Findings per App (SAST/SCA): <input id="findings" type="number" value="700"></label>
     <label>False Positive Rate (%): <input id="fpRate" type="number" value="40" step="0.01"></label>
+    <p class="result">Hence, this is the number of relevant findings, do you agree? <span id="relevantFindings">0</span></p>
     <label># of Apps: <input id="apps" type="number" value="100"></label>
     <label>Releases per Year: <input id="releases" type="number" value="12"></label>
     <label>AppSec Hourly Rate ($): <input id="hourlyRate" type="number" value="70"></label>
@@ -112,6 +113,8 @@
       const contrastCost = parseFloat(document.getElementById("contrastCost").value);
 
       const relevantFindings = findings * (1 - fpRate);
+      document.getElementById("relevantFindings").textContent = formatNumber(relevantFindings);
+
       const triageCost = hourlyRate * triageTime / 60;
       const triageScan = triageCost * findings;
       const triageAnnual = triageScan + triageScan * retriageRate * (releases - 1);
