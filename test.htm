@@ -1,0 +1,173 @@
+TAILED<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Contrast AST ROI Calculator DETAILED</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 40px;
+      background-color: #f9f9f9;
+    }
+    label {
+      display: block;
+      margin-top: 10px;
+    }
+    input[type="number"] {
+      width: 100px;
+    }
+    .section {
+      margin-top: 30px;
+      padding: 20px;
+      background-color: #fff;
+      border-radius: 8px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    }
+    h2 {
+      margin-top: 0;
+    }
+    .result {
+      font-weight: bold;
+    }
+    #calculateBtn {
+      margin-top: 20px;
+      padding: 10px 20px;
+      font-size: 16px;
+      background-color: #007BFF;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+    #calculateBtn:hover {
+      background-color: #0056b3;
+    }
+    footer {
+      margin-top: 50px;
+      padding-top: 20px;
+      border-top: 1px solid #ccc;
+      font-size: 0.9em;
+      color: #333;
+    }
+  </style>
+</head>
+<body>
+  <h1>Contrast AST ROI Calculator DETAILED</h1>
+
+  <div class="section">
+    <h2>Customer Facts</h2>
+    <label>Findings per App (SAST/SCA): <input id="findings" type="number" value="700"></label>
+    <label>False Positive Rate (%): <input id="fpRate" type="number" value="40" step="0.01"></label>
+    <p class="result">Hence, this is the number of relevant findings, do you agree? <span id="relevantFindings">0</span></p>
+    <label># of Apps: <input id="apps" type="number" value="100"></label>
+    <label>Releases per Year: <input id="releases" type="number" value="12"></label>
+    <label>AppSec Hourly Rate ($): <input id="hourlyRate" type="number" value="70"></label>
+  </div>
+
+  <div class="section">
+    <h2>Before Contrast</h2>
+    <label>Time to Triage (minutes): <input id="triageTime" type="number" value="20"></label>
+    <p class="result">Triage Cost per Vulnerability: $<span id="triageCost">0</span></p>
+    <p class="result">Triage Cost per Scan: $<span id="triageScan">0</span></p>
+    <label>Findings needing triaged again when scanning multiple times (e.g. one scan per release)? (%): <input id="retriageRate" type="number" value="20" step="0.01"></label>
+    <p class="result">Annual Triage Cost: $<span id="triageAnnual">0</span></p>
+    <label>Time to Fix vulnerability (minutes): <input id="fixTime" type="number" value="60"></label>
+    <p class="result">Annual Fix Cost: $<span id="fixAnnual">0</span></p>
+    <p class="result">Total Cost per App/Year: $<span id="totalBefore">0</span></p>
+   
+     
+   
+  </div>
+
+  <div class="section">
+    <h2>After Contrast</h2>
+    <p class="result">Contrast Runtime Sec. Vulns (vs. 4.2 traditional): <span id="contrastFindings">0</span></p>
+    <p class="result">Triage Cost: $<span id="triageAfter">0</span></p>
+    <p class="result">Fix Time (minutes): <span id="fixTimeAfter">0</span></p>
+    <p class="result">Annual Fix Cost: $<span id="fixAnnualAfter">0</span></p>
+    <p class="result">Total Cost per App/Year: $<span id="totalAfter">0</span></p>
+    <p class="result">Cost Savings per App/Year: $<span id="savingsApp">0</span></p>
+    <p class="result">Total Annual Savings: $<span id="totalAnnual">0</span></p>
+    <p class="result">Total Monthly Savings: $<span id="totalMonthly">0</span></p>
+    <label>Contrast Cost per App: <input id="contrastCost" type="number" value="15000"></label>
+    <p class="result">Contrast Annual Contract: $<span id="annualContract">0</span></p>
+    <p class="result">Net Savings per App/Year: $<span id="netApp">0</span></p>
+    <p class="result">Net Savings - Annual: $<span id="netAnnual">0</span></p>
+    <button id="calculateBtn">Calculate</button>
+  </div>
+
+  <script>
+    function formatNumber(num) {
+      return num.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+    }
+
+    function calculate() {
+      const findings = parseFloat(document.getElementById("findings").value);
+      const fpRate = parseFloat(document.getElementById("fpRate").value) / 100;
+      const apps = parseFloat(document.getElementById("apps").value);
+      const releases = parseFloat(document.getElementById("releases").value);
+      const hourlyRate = parseFloat(document.getElementById("hourlyRate").value);
+      const triageTime = parseFloat(document.getElementById("triageTime").value);
+      const retriageRate = parseFloat(document.getElementById("retriageRate").value) / 100;
+      const fixTime = parseFloat(document.getElementById("fixTime").value);
+      const contrastCost = parseFloat(document.getElementById("contrastCost").value);
+
+      const relevantFindings = findings * (1 - fpRate);
+      const triageCost = hourlyRate * triageTime / 60;
+      const triageScan = triageCost * findings;
+      const triageAnnual = triageScan + triageScan * retriageRate * (releases - 1);
+      const fixAnnual = fixTime * relevantFindings / 60 * hourlyRate;
+      const totalBefore = triageAnnual + fixAnnual;
+
+      const contrastFindings = relevantFindings / (4.2 / 0.9);
+      const fixTimeAfter = fixTime / 3;
+      const triageAfter = 0;
+      const fixAnnualAfter = fixTimeAfter * contrastFindings / 60 * hourlyRate;
+      const totalAfter = fixAnnualAfter;
+
+      const savingsApp = totalBefore - totalAfter;
+      const totalAnnual = savingsApp * apps;
+      const totalMonthly = totalAnnual / 12;
+      const annualContract = contrastCost * apps;
+      const netApp = annualContract / apps;
+      const netAnnual = totalAnnual - annualContract;
+
+      document.getElementById("relevantFindings").textContent = formatNumber(relevantFindings);
+      document.getElementById("triageCost").textContent = formatNumber(triageCost);
+      document.getElementById("triageScan").textContent = formatNumber(triageScan);
+      document.getElementById("triageAnnual").textContent = formatNumber(triageAnnual);
+      document.getElementById("fixAnnual").textContent = formatNumber(fixAnnual);
+      document.getElementById("totalBefore").textContent = formatNumber(totalBefore);
+      document.getElementById("contrastFindings").textContent = formatNumber(contrastFindings);
+      document.getElementById("triageAfter").textContent = formatNumber(triageAfter);
+      document.getElementById("fixTimeAfter").textContent = formatNumber(fixTimeAfter);
+      document.getElementById("fixAnnualAfter").textContent = formatNumber(fixAnnualAfter);
+      document.getElementById("totalAfter").textContent = formatNumber(totalAfter);
+      document.getElementById("savingsApp").textContent = formatNumber(savingsApp);
+      document.getElementById("totalAnnual").textContent = formatNumber(totalAnnual);
+      document.getElementById("totalMonthly").textContent = formatNumber(totalMonthly);
+      document.getElementById("annualContract").textContent = formatNumber(annualContract);
+      document.getElementById("netApp").textContent = formatNumber(netApp);
+      document.getElementById("netAnnual").textContent = formatNumber(netAnnual);
+    }
+
+    document.getElementById("calculateBtn").addEventListener("click", calculate);
+    calculate();
+  </script>
+
+  <footer>
+    <p><strong>Assumptions:</strong><br>
+    40% industry false positive rate<br>
+    1% Contrast false positive rate<br>
+    Developers using Contrast end up producing 4.6x LESS vulnerabilities (due to faster feedback, more context, no triaging, developers learn faster, fix faster and make fewer mistakes moving forward).<br>
+    Repeated static scans produce reports that need to be triaged, even if they have been triaged before ... 80% of the findings can probably be ignored, but there will be an overhead per scan.<br>
+    Contrast enables developers on average to fix 3x faster as both HTTP information AND code flow information are provided (DAST only provides HTTP information, SAST only code information).
+    </p>
+
+    <p><strong>Notes:</strong><br>
+    Before Contrast and at a 40% FP, there would be 10,000×1.4=14,000 vulnerabilities detected.
+    </p>
+  </footer>
+</body>
+</html>
