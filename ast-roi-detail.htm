@@ -150,16 +150,18 @@
     calculate();
   </script>
 
-  <footer>
+<footer>
     <p><strong>Assumptions:</strong><br>
     40% industry false positive rate<br>
-    1% Contrast false positive rate</p>
+    1% Contrast false positive rate<br>
+    Developers using Contrast end up producing 4.6x LESS vulnerabilities (due to faster feedback, more context, no triaging, developers learn faster, fix faster and make fewer mistakes moving forward).<br>
+    Repeated static scans produce reports that need to be triaged, even if they have been triaged before ... 80% of the findings can probably be ignored, but there will be an overhead per scan.<br>
+    Contrast enables developers on average to fix 3x faster as both HTTP information AND code flow information are provided (DAST only provides HTTP information, SAST only code information).
+    </p>
 
     <p><strong>Notes:</strong><br>
-    Before Contrast triage cost represents the fact that an additional 0% cost must be added due to false positives that still must be triaged<br>
-    After Contrast cost per cost represents the fact that an additional 1% cost must be added due to false positives that still must be triaged<br><br>
-
-    With Contrast AST if 10,000 vulnerabilities are remediated at a 1% FP then without Contrast and at a 40% FP, there would be 10,000×1.4=14,000 vulnerabilities detected and AppSec would need to figure out the false positives.</p>
+    Before Contrast and at a 40% FP, there would be 10,000×1.4=14,000 vulnerabilities detected.
+    </p>
   </footer>
 </body>
 </html>
