@@ -58,7 +58,7 @@
   <div class="section">
     <h2>Customer Facts</h2>
     <label>Findings per App (SAST/SCA): <input id="findings" type="number" value="700"></label>
-    <label>False Positive Rate: <input id="fpRate" type="number" value="0.4" step="0.01"></label>
+    <label>False Positive Rate (%): <input id="fpRate" type="number" value="40" step="0.01"></label>
     <label># of Apps: <input id="apps" type="number" value="100"></label>
     <label>Releases per Year: <input id="releases" type="number" value="12"></label>
     <label>AppSec Hourly Rate ($): <input id="hourlyRate" type="number" value="70"></label>
@@ -67,7 +67,7 @@
   <div class="section">
     <h2>Before Contrast</h2>
     <label>Time to Triage (minutes): <input id="triageTime" type="number" value="20"></label>
-    <label>Re-Triage Rate (%): <input id="retriageRate" type="number" value="0.2" step="0.01"></label>
+    <label>Re-Triage Rate (%): <input id="retriageRate" type="number" value="20" step="0.01"></label>
     <label>Time to Fix (minutes): <input id="fixTime" type="number" value="60"></label>
     <p class="result">Triage Cost per Vulnerability: $<span id="triageCost">0</span></p>
     <p class="result">Triage Cost per Scan: $<span id="triageScan">0</span></p>
@@ -100,12 +100,12 @@
 
     function calculate() {
       const findings = parseFloat(document.getElementById("findings").value);
-      const fpRate = parseFloat(document.getElementById("fpRate").value);
+      const fpRate = parseFloat(document.getElementById("fpRate").value) / 100;
       const apps = parseFloat(document.getElementById("apps").value);
       const releases = parseFloat(document.getElementById("releases").value);
       const hourlyRate = parseFloat(document.getElementById("hourlyRate").value);
       const triageTime = parseFloat(document.getElementById("triageTime").value);
-      const retriageRate = parseFloat(document.getElementById("retriageRate").value);
+      const retriageRate = parseFloat(document.getElementById("retriageRate").value) / 100;
       const fixTime = parseFloat(document.getElementById("fixTime").value);
       const runtimeVulns = parseFloat(document.getElementById("runtimeVulns").value);
       const fixTimeAfter = parseFloat(document.getElementById("fixTimeAfter").value);
@@ -150,7 +150,7 @@
     calculate();
   </script>
 
-<footer>
+  <footer>
     <p><strong>Assumptions:</strong><br>
     40% industry false positive rate<br>
     1% Contrast false positive rate<br>
