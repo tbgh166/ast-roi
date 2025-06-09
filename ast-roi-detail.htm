@@ -69,8 +69,7 @@
     <h2>Before Contrast</h2>
     <label>Time to Triage (minutes): <input id="triageTime" type="number" value="20"></label>
     <label>Re-Triage Rate (%): <input id="retriageRate" type="number" value="20" step="0.01"></label>
-    <label>Time to Fix (minutes): <input id="fixTime" type="number" value="60" readonly></label>
-    <p class="result">Fix Time (min) = Triage Time / 3: <span id="fixTimeCalc">0</span></p>
+    <label>Time to Fix (minutes): <input id="fixTime" type="number" value="60"></label>
     <p class="result">Triage Cost per Vulnerability: $<span id="triageCost">0</span></p>
     <p class="result">Triage Cost per Scan: $<span id="triageScan">0</span></p>
     <p class="result">Annual Triage Cost: $<span id="triageAnnual">0</span></p>
@@ -82,7 +81,7 @@
     <h2>After Contrast</h2>
     <p class="result">Contrast Runtime Sec. Vulns (vs. 4.2 traditional): <span id="contrastFindings">0</span></p>
     <p class="result">Triage Cost: $<span id="triageAfter">0</span></p>
-    <label>Fix Time (minutes): <input id="fixTimeAfter" type="number" value="20"></label>
+    <p class="result">Fix Time (minutes): <span id="fixTimeAfter">0</span></p>
     <p class="result">Annual Fix Cost: $<span id="fixAnnualAfter">0</span></p>
     <p class="result">Total Cost per App/Year: $<span id="totalAfter">0</span></p>
     <p class="result">Cost Savings per App/Year: $<span id="savingsApp">0</span></p>
@@ -108,8 +107,7 @@
       const hourlyRate = parseFloat(document.getElementById("hourlyRate").value);
       const triageTime = parseFloat(document.getElementById("triageTime").value);
       const retriageRate = parseFloat(document.getElementById("retriageRate").value) / 100;
-      const fixTime = triageTime / 3;
-      const fixTimeAfter = parseFloat(document.getElementById("fixTimeAfter").value);
+      const fixTime = parseFloat(document.getElementById("fixTime").value);
       const contrastCost = parseFloat(document.getElementById("contrastCost").value);
 
       const relevantFindings = findings * (1 - fpRate);
@@ -120,6 +118,7 @@
       const totalBefore = triageAnnual + fixAnnual;
 
       const contrastFindings = relevantFindings / (4.2 / 0.9);
+      const fixTimeAfter = fixTime / 3;
       const triageAfter = 0;
       const fixAnnualAfter = fixTimeAfter * contrastFindings / 60 * hourlyRate;
       const totalAfter = fixAnnualAfter;
@@ -131,8 +130,6 @@
       const netApp = annualContract / apps;
       const netAnnual = totalAnnual - annualContract;
 
-      document.getElementById("fixTime").value = fixTime.toFixed(2);
-      document.getElementById("fixTimeCalc").textContent = fixTime.toFixed(2);
       document.getElementById("relevantFindings").textContent = formatNumber(relevantFindings);
       document.getElementById("triageCost").textContent = formatNumber(triageCost);
       document.getElementById("triageScan").textContent = formatNumber(triageScan);
@@ -141,6 +138,7 @@
       document.getElementById("totalBefore").textContent = formatNumber(totalBefore);
       document.getElementById("contrastFindings").textContent = formatNumber(contrastFindings);
       document.getElementById("triageAfter").textContent = formatNumber(triageAfter);
+      document.getElementById("fixTimeAfter").textContent = formatNumber(fixTimeAfter);
       document.getElementById("fixAnnualAfter").textContent = formatNumber(fixAnnualAfter);
       document.getElementById("totalAfter").textContent = formatNumber(totalAfter);
       document.getElementById("savingsApp").textContent = formatNumber(savingsApp);
