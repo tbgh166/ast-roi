@@ -130,9 +130,10 @@ TAILED<!DOCTYPE html>
       const totalAnnual = savingsApp * apps;
       const totalMonthly = totalAnnual / 12;
       const annualContract = contrastCost * apps;
-      const netApp = annualContract / apps;
+      <!-- const netApp = annualContract / apps; -->
       const netAnnual = totalAnnual - annualContract;
-
+      const netApp = netAnnual / apps;
+      
       document.getElementById("relevantFindings").textContent = formatNumber(relevantFindings);
       document.getElementById("triageCost").textContent = formatNumber(triageCost);
       document.getElementById("triageScan").textContent = formatNumber(triageScan);
