@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Contrast Triage Cost Savings Calculator</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 40px;
+      background-color: #f9f9f9;
+    }
+    label {
+      display: block;
+      margin-top: 10px;
+    }
+    input[type="number"] {
+      width: 100px;
+    }
+    .section {
+      margin-top: 30px;
+      padding: 20px;
+      background-color: #fff;
+      border-radius: 8px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    }
+    h2 {
+      margin-top: 0;
+    }
+    .result {
+      font-weight: bold;
+    }
+    #calculateBtn {
+      margin-top: 20px;
+      padding: 10px 20px;
+      font-size: 16px;
+      background-color: #007BFF;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+    #calculateBtn:hover {
+      background-color: #0056b3;
+    }
+  </style>
+</head>
+<body>
+  <h1>Contrast Triage Cost Savings Calculator</h1>
+
+  <div class="section">
+    <h2>Customer Facts</h2>
+    <label>Average # of true vulnerabilities per app: <input id="vulnsPerApp" type="number" value="1000"></label>
+    <label># of apps: <input id="numApps" type="number" value="20"></label>
+    <label>Appsec hourly rate ($): <input id="hourlyRate" type="number" value="70"></label>
+  </div>
+
+  <div class="section">
+    <h2>Before Contrast</h2>
+    <label>False positive rate (%): <input id="falsePositiveRateBefore" type="number" value="40"></label>
+    <label>Time to triage a vulnerability (minutes): <input id="triageTime" type="number" value="20"></label>
+    <p class="result">Triage cost per vulnerability: $<span id="triageCostBefore">0.00</span></p>
+    <p class="result">Triage cost per app: $<span id="costPerAppBefore">0.00</span></p>
+  </div>
+
+  <div class="section">
+    <h2>After Contrast</h2>
+    <label>False positive rate (%): <input id="falsePositiveRateAfter" type="number" value="1"></label>
+    <label>Time to triage a vulnerability (minutes): <input id="triageTimeAfter" type="number" value="20"></label>
+    <p class="result">Triage cost per vulnerability: $<span id="triageCostAfter">0.00</span></p>
+    <p class="result">Triage cost per app: $<span id="costPerAppAfter">0.00</span></p>
+    <p class="result">Cost savings per app: $<span id="savingsPerApp">0.00</span></p>
+    <p class="result">Total cost savings - annual: $<span id="annualSavings">0.00</span></p>
+    <p class="result">Total cost savings - monthly: $<span id="monthlySavings">0.00</span></p>
+    <button id="calculateBtn">Calculate</button>
+  </div>
+
+  <script>
+    function formatNumber(num) {
+      return num.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+    }
+
+    function calculate() {
+      const vulnsPerApp = parseFloat(document.getElementById("vulnsPerApp").value);
+      const numApps = parseFloat(document.getElementById("numApps").value);
+      const hourlyRate = parseFloat(document.getElementById("hourlyRate").value);
+
+      const falsePositiveRateBefore = parseFloat(document.getElementById("falsePositiveRateBefore").value) / 100;
+      const triageTime = parseFloat(document.getElementById("triageTime").value);
+
+      const falsePositiveRateAfter = parseFloat(document.getElementById("falsePositiveRateAfter").value) / 100;
+      const triageTimeAfter = parseFloat(document.getElementById("triageTimeAfter").value);
+
+      const triageCostBefore = (hourlyRate * triageTime) / 60;
+      const costPerAppBefore = vulnsPerApp * (1 + falsePositiveRateBefore) * triageCostBefore;
+
+      const triageCostAfter = (hourlyRate * triageTimeAfter) / 60;
+      const costPerAppAfter = vulnsPerApp * (1 + falsePositiveRateAfter) * triageCostAfter;
+
+      const savingsPerApp = costPerAppBefore - costPerAppAfter;
+      const annualSavings = savingsPerApp * numApps;
+      const monthlySavings = annualSavings / 12;
+
+      document.getElementById("triageCostBefore").textContent = formatNumber(triageCostBefore);
+      document.getElementById("costPerAppBefore").textContent = formatNumber(costPerAppBefore);
+      document.getElementById("triageCostAfter").textContent = formatNumber(triageCostAfter);
+      document.getElementById("costPerAppAfter").textContent = formatNumber(costPerAppAfter);
+      document.getElementById("savingsPerApp").textContent = formatNumber(savingsPerApp);
+      document.getElementById("annualSavings").textContent = formatNumber(annualSavings);
+      document.getElementById("monthlySavings").textContent = formatNumber(monthlySavings);
+    }
+
+    document.getElementById('calculateBtn').addEventListener('click', calculate);
+    calculate();
+  </script>
+</body>
+</html>
