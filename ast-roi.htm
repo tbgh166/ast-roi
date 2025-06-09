@@ -94,7 +94,7 @@
 
   <script>
     function formatNumber(num) {
-      return num.toFixed(2).toLocaleString();
+      return num.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 });
     }
 
     function calculate() {
