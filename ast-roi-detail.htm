@@ -57,7 +57,7 @@
 
   <div class="section">
     <h2>Customer Facts</h2>
-    <label>Findings per App (SAST/SCA): <input id="findings" type="number" value="700"></label>
+    <label>ANNUAL Findings per App on Average (SAST/SCA): <input id="findings" type="number" value="700"></label>
     <label>False Positive Rate (%): <input id="fpRate" type="number" value="40" step="0.01"></label>
     <p class="result">Hence, this is the number of relevant findings, do you agree? <span id="relevantFindings">0</span></p>
     <label># of Apps: <input id="apps" type="number" value="100"></label>
@@ -67,13 +67,13 @@
 
   <div class="section">
     <h2>Before Contrast</h2>
-    <label>Time to Triage (minutes): <input id="triageTime" type="number" value="20"></label>
+    <label>Time to Triage a Vulnerability (minutes): <input id="triageTime" type="number" value="20"></label>
     <p class="result">Triage Cost per Vulnerability: $<span id="triageCost">0</span></p>
     <p class="result">Triage Cost per Scan: $<span id="triageScan">0</span></p>
-    <label>Findings needing triaged again when scanning multiple times (e.g. one scan per release)? (%): <input id="retriageRate" type="number" value="20" step="0.01"></label>
-    <p class="result">Annual Triage Cost: $<span id="triageAnnual">0</span></p>
+    <label>Findings that need triaged again when scanning multiple times (e.g. one scan per release)? (%): <input id="retriageRate" type="number" value="20" step="0.01"></label>
+    <p class="result">Annual Triage Cost (assume that only a % of subsequent results need to be actively re-triaged after the first full scan): $<span id="triageAnnual">0</span></p>
     <label>Time to Fix vulnerability (minutes): <input id="fixTime" type="number" value="60"></label>
-    <p class="result">Annual Fix Cost: $<span id="fixAnnual">0</span></p>
+    <p class="result">Annual Fix Cost (based on final triage of vulnerabilities: $<span id="fixAnnual">0</span></p>
     <p class="result">Total Cost per App/Year: $<span id="totalBefore">0</span></p>
    
      
@@ -82,7 +82,7 @@
 
   <div class="section">
     <h2>After Contrast</h2>
-    <p class="result">Contrast Runtime Sec. Vulns (vs. 4.2 traditional): <span id="contrastFindings">0</span></p>
+    <p class="result">Contrast data: average projects using Runtime Security produce 0.9 new vulns vs 4.2 with trad. vendors. So, number of findings would have been:: <span id="contrastFindings">0</span></p>
     <p class="result">Triage Cost (FP rate is <2% making triaging low cost even if we have to fix 2 irrelevant findings): $<span id="triageAfter">0</span></p>
     <p class="result">Fix Time (More context and precise remediation advice, fixing is estimated to be 3x faster) (minutes): <span id="fixTimeAfter">0</span></p>
     <p class="result">Annual Fix Cost (on the basis of the final triaged vulns): $<span id="fixAnnualAfter">0</span></p>
